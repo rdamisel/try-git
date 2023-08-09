@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown Timer</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function startCountdown() {
+      // Get the user input for hours and minutes
+      var hoursInput = document.getElementById("hours").value;
+      var minutesInput = document.getElementById("minutes").value;
+
+      // Calculate the target time in milliseconds
+      var targetTime = new Date();
+      targetTime.setHours(hoursInput);
+      targetTime.setMinutes(minutesInput);
+      targetTime.setSeconds(0);
+
+      // Update the countdown every second
+      var countdownInterval = setInterval(function() {
+        var currentTime = new Date();
+        var remainingTime = targetTime - currentTime;
+
+        // Check if countdown is finished
+        if (remainingTime <= 0) {
+          clearInterval(countdownInterval);
+          document.getElementById("countdown").innerHTML = "Countdown Complete!";
+        } else {
+          // Calculate remaining minutes and seconds
+          var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+          // Display the countdown
+          document.getElementById("countdown").innerHTML = minutes + "m " + seconds + "s";
+        }
+      }, 1000);
+    }
+  </script>
+</head>
+<body>
+  <div class="container mt-5 col-4 text-center">
+    <h1 class="mb-4">Countdown Timer</h1>
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <label for="hours">End Hour:</label>
+          <input type="number" id="hours" class="form-control" min="0" max="23">
+        </div>
+        <div class="col">
+          <label for="minutes">End Minutes:</label>
+          <input type="number" id="minutes" class="form-control" min="0" max="59">
+        </div>
+      </div>
+    </div>
+    <button onclick="startCountdown()" class="btn btn-primary">Start Countdown</button>
+    <h2 id="countdown" class="mt-4 display-1"></h2>
+  </div>
+</body>
+</html>
